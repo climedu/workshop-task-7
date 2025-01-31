@@ -7,7 +7,8 @@ Here is a URL to the webpage for this project: [link]( https://climedu.github.io
 - Make a new repository for your p5.js project on your GitHub account, publish your sketch as a webpage, and include a README file in your repository with a URL to the webpage along with documentation of your work.
   
 ## Overview
-- 
+- learning new function about random walks and the particle system
+- Experimenting with the random walk
 
 ## Workshop Notes
 
@@ -269,13 +270,132 @@ If including the rgb
 
 
 ## Task Journey
+Trying to using (png images) and apply them into the function [https://pngtree.com/freepng/cute-head-duck-doodle-sticker_9068657.html]
+
+### Process 2
+Trying to use duck stickers from png, and making them moveing down 
+```ruby
+let walkers = [];
+let duck;
+
+function preload(){
+  duck = loadImage('images/duck.png');
+  }
+  
+
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+  background(0);
+  
+  for (let i = 0; i < 20; i++) {
+    let x = random(0, width);
+    let y = random(0, height);
+    walkers[i] = new Walker(x, y,255); // Use 'walkers' instead of 'walker'
+  }
+}
+
+function windowResized(){
+  resizeCanvas(windowWidth, windowHeight);
+}
+
+function draw() {
+  for (let x = 0; x < walkers.length; x++) {
+    walkers[x].step();
+    walkers[x].show();
+  }
+}
 
 
-### Process 1
+class Walker {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+
+  step() {
+    this.x += random(1,2);
+    this.y += random(1,2);
+  }
+
+  show() {
+    image(duck, this.x, this.y, 20, 20);
+  }
+}
+
+```
+
+<img width="602" alt="Screenshot 2025-01-31 at 3 23 49 PM" src="https://github.com/user-attachments/assets/4342a9ae-cb96-42ed-a4b5-ebda7d4299ad" />
+
+### Process 3
+Experimenting instead of making a stamp of ducks, how to make them moving down to right
+adding background under the drawing to reset the background on every frame
+
+<img width="400" alt="Screenshot 2025-01-31 at 3 28 21 PM" src="https://github.com/user-attachments/assets/1e524420-ed27-452c-abca-248dbbadcedc" />
+
+### Process 4
+Want to apply the function to not going out of the canvas
+```ruby
+let walkers = [];
+let duck;
+
+function preload(){
+  duck = loadImage('images/duck.png');
+  }
+  
+
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+  background(0);
+  
+  for (let i = 0; i < 20; i++) {
+    let x = random(0, width);
+    let y = random(0, height);
+    walkers[i] = new Walker(x, y); // Use 'walkers' instead of 'walker'
+  }
+}
+
+function windowResized(){
+  resizeCanvas(windowWidth, windowHeight);
+}
+
+function draw() {
+  background(0); // clear the background each frame
+  for (let x = 0; x < walkers.length; x++) {
+    walkers[x].step();
+    walkers[x].show();
+
+  }
+}
+
+
+class Walker {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+
+  step() {
+    this.x += random(1,2);
+    this.y += random(1,2);
+  
+    // make it not going out of the canvas
+    this.x = constrain(this.x, 0, width - 20);
+    this.y = constrain(this.y, 0, height - 20);
+  }
+
+  show() {
+    image(duck, this.x, this.y, 20, 20);
+  }
+}
+```
+
+<img width="400" alt="Screenshot 2025-01-31 at 3 28 21 PM" src="https://github.com/user-attachments/assets/96c21848-8bed-45b9-9d30-98a8b6c48ef0" />
 
 
 ### Commentaries
-- 
+- It was a new function to learn, experimenting wit hthe random walk.
+- Instead of making the range movement negative and positive, I made it all positive with a range 1 to 2, and in the ened, they ducks stucks at the edge
 
 ## Future Development
+- Maybe adding some next scene about what happen if one or all of the ducks stuck on the edge of the screen. (Was thinking changing the character, and starting to moving randomly to the other canvas corner.
 
